@@ -1,0 +1,17 @@
+const express = require('express');
+const router = express.Router();
+const rbac = require('./middleware/rbac');
+
+router.get('/public', (req, res) => {
+  res.json({ message: 'Public route' });
+});
+
+router.get('/user-profile', authenticate, (req, res) => {
+  res.json({ message: 'User profile' });
+});
+
+router.get('/admin-panel', authenticate, rbac(roles.admin), (req, res) => {
+  res.json({ message: 'Admin panel' });
+});
+
+module.exports = router;
